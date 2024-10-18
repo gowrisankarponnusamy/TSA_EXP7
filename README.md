@@ -93,16 +93,16 @@ plt.show()
 ```
 ### OUTPUT:
 
-GIVEN DATA:
+### GIVEN DATA:
 ![image](https://github.com/user-attachments/assets/77e09a18-3292-4471-b7c6-8a8eea669f65)
 
-PACF - ACF:
+### PACF - ACF:
 ![image](https://github.com/user-attachments/assets/01eebb76-63f3-45cc-8a17-d6e48f6fe238)
 
-PREDICTION:
+### PREDICTION:
 ![image](https://github.com/user-attachments/assets/123e19d9-74a7-4d61-bdca-0586bf0eb91d)
 
-FINIAL PREDICTION:
+### FINIAL PREDICTION:
 ![image](https://github.com/user-attachments/assets/de5babe0-c7cb-4383-898c-a65b7137b1d6)
 
 ### RESULT:
