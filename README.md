@@ -26,18 +26,13 @@ from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
 from statsmodels.tsa.ar_model import AutoReg
 from sklearn.metrics import mean_squared_error
 
-# Load dataset
 file_path = 'FINAL_USO.csv'
 data = pd.read_csv(file_path)
 
-
-# Convert 'Date' to datetime
 data['Date'] = pd.to_datetime(data['Date'])
 
-# Set 'Date' as the index
 data.set_index('Date', inplace=True)
 
-# Extract 'USO_Close' prices
 close_prices = data['USO_Close']
 # Plot the USO_Close prices over time
 plt.figure(figsize=(10, 6))
@@ -48,10 +43,10 @@ plt.ylabel('USO Close Price')
 plt.legend()
 plt.grid(True)
 plt.show()
-# Resample to weekly frequency
+
 weekly_close_prices = close_prices.resample('W').mean()
 
-# Perform ADF test for stationarity
+
 result = adfuller(weekly_close_prices.dropna())
 adf_statistic, p_value = result[0], result[1]
 print(f'ADF Statistic: {adf_statistic}')
@@ -61,23 +56,18 @@ if p_value < 0.05:
 else:
     print("The data is non-stationary.")
 
-# Split data into training and testing sets (80% train, 20% test)
 train_size = int(len(weekly_close_prices) * 0.8)
 train, test = weekly_close_prices[:train_size], weekly_close_prices[train_size:]
 
-# Plot ACF and PACF of the training data
 fig, ax = plt.subplots(2, figsize=(8, 6))
 plot_acf(train.dropna(), ax=ax[0], title='Autocorrelation Function (ACF)')
 plot_pacf(train.dropna(), ax=ax[1], title='Partial Autocorrelation Function (PACF)')
 plt.show()
 
-# Fit an AutoRegressive model (AR) on the training data
 ar_model = AutoReg(train.dropna(), lags=13).fit()
 
-# Predict on the test data
 ar_pred = ar_model.predict(start=len(train), end=len(train) + len(test) - 1, dynamic=False)
 
-# Plot the predicted vs actual values for the test set
 plt.figure(figsize=(10, 4))
 plt.plot(test, label='Test Data')
 plt.plot(ar_pred, label='AR Model Prediction', color='red')
@@ -87,11 +77,9 @@ plt.ylabel('USO Close Price')
 plt.legend()
 plt.show()
 
-# Calculate and display the mean squared error (MSE)
 mse = mean_squared_error(test, ar_pred)
 print(f'Mean Squared Error (MSE): {mse}')
 
-# Plot train, test, and prediction for comparison
 plt.figure(figsize=(10, 4))
 plt.plot(train, label='Train Data')
 plt.plot(test, label='Test Data')
